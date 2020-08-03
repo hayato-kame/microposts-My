@@ -21,7 +21,7 @@ class RegisterController extends Controller
     | provide this functionality without requiring any additional code.
     |
     */
-
+//  トレイト
     use RegistersUsers;
 
     /**
@@ -38,7 +38,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('guest');  //  ログインしてないゆーざにたいして
     }
 
     /**
