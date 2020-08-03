@@ -8,34 +8,29 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
-    | to conveniently provide its functionality to your applications.
-    |
-    */
+   
+// トレイトです
+//  Router の  　routesフォルダの   web.phpファイル      で設定した 
+//  showLoginForm や login のアクションはこのトレイトに定義されています。
 
     use AuthenticatesUsers;
+    
 
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
+    // リダイレクト先
     protected $redirectTo = RouteServiceProvider::HOME;
+    
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
+    // コンストラクタ
     public function __construct()
     {
-        // ログインしてない閲覧者に対してアクションの実行前にログイン状態を確認し、ログインしていない場合はそのまま実行させますが、ログインしている場合は実行させず別のURLへ飛ばします
-        $this->middleware('guest')->except('logout');//logout アクションを除くこのコントローラの全アクションに guest ミドルウェアを指定している
+        
+        
+        //  ログインしてない閲覧者   'guest'  に対してアクションの実行前にログイン状態を確認し、
+        //  ログインしていない場合はmiddlewareをそのまま実行させますが、ログインしている場合は実行させず別のURLへ飛ばします
+        //  logout アクションを除くこのコントローラの全アクションに guest ミドルウェアを指定している
+        
+        
+        $this->middleware('guest')->except('logout');
+        
     }
 }
