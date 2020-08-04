@@ -1,16 +1,22 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="center jumbotron">
-        <div class="text-center">
-            <h1>Welcome to the Microposts</h1>
-            
-            {{--  ユーザ登録ページへのリンク --}}
-            
-            {!! link_to_route('signup.get', 'Sign up now', [], ['btn btn-lg btn-primary']) !!}
-            
+
+    @if (Auth::check())
+        {{ Auth::user()->name }}
+    
+    @else
+        <div class="center jumbotron">
+            <div class="text-center">
+                <h1>Welcome to the Microposts</h1>
+                
+                {{--  ユーザ登録ページへのリンク --}}
+                
+                {!! link_to_route('signup.get', 'Sign up now', [], ['btn btn-lg btn-primary']) !!}
+                
+            </div>
         </div>
-    </div>
+    @endif
 @endsection
 
 
@@ -27,6 +33,12 @@
       @section('content')   と     @endsection の間に書かれたものが、
       layoutsフォルダの app.blade.phpファイルの   @yield('content')  のところに入ります
 
+
+--}}
+
+{{-- 
+
+ちなみに、Bladeファイルの中には素のPHPコードを埋め込むこともできます。
 
 --}}
 

@@ -48,21 +48,79 @@ htmlspecialchars関数に通したものが出力されます
         
         <div class="collapse navbar-collapse" id="nav-bar">
             <ul class="navbar-nav mr-auto"></ul>
-            <ul class="navbar-nav navbar-right">
+            
+            
+            <ul class="navbar-nav">
+                @if(Auth::check())
                 
-                {{-- ユーザー登録ページへのリンク  ナビゲーションバーの  Signup のところ --}
-                <li>
-                    {!! link_to_route('signup.get', 'Signup', [], ['class' => 'nav-link']) !!}
-                </li>
+                     {{-- ユーザ一覧ページへのリンク --}}
+                     <li class="nav-item"><a href="#" class="nav-link">Users</a></li>
+                     <li class="nav-item dropdown">
+                         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+                             {{ Auth::user()->name }}
+                         </a>
+                         <ul calss="dropdown-menu dropdown-menu-right">
+                             {{-- ユーザ詳細ページへのリンク --}}
+                             <li class="dropdown-item"><a href="#">My profile</a></li>
+                             
+                             <li class="dropdown-driver"></li>
+                             
+                             {{-- ログアウトへのリンク --}}
+                             <li class="dropdown-item">
+                                 {!!  link_to_route('logout.get', 'Logout') !!}
+                             </li>
+                             
+                         </ul>
+                     </li>
                 
-                {{-- ログインページへのリンク --}}
-                <li>
-                    <a href="#">Login</a>
-                </li>
+                @else
                 
+                    {{-- ユーザー登録ページへのリンク  ナビゲーションバーの  Signup のところ --}
+                    <li class="nav-item">
+                        {!! link_to_route('signup.get', 'Signup', [], ['class' => 'nav-link']) !!}
+                    </li>
+                    
+                    {{-- ログインページへのリンク --}}
+                    <li class="nav-item">
+                        {!! link_to_route('login', 'Login', [], ['class' => 'nav-link']) !!}
+                    </li>
+                @endif
             </ul>
         </div>
         
     </nav>
     
 </header>
+
+
+{{--  Auth::check()   は、ユーザがログインしているかどうかを調べるための関数です  --}}
+
+
+{{-- 
+
+Bladeのファイル内で、条件によって表示内容を分けるために if-else 文を使いたいときは
+@if (条件式） ... @else ... @endif の指定をしてください。
+
+Authファサードについて
+ファサード とは、各クラスのメソッドを扱いやすくしたものです。
+以下に ‘Auth’ => Illuminate\Support\Facades\Auth::class, とありますが、
+右側のIlluminate\Support\Facades\Auth::classがファサードに登録したいクラスです。
+通常はIlluminate\Support\Facades\Authと記述する必要があるところを、
+Authと短く記述して呼び出せるようになります。つまりはエイリアスなのです。
+
+ファサードは、 config/app.phpのaliasesの中で設定されています。
+
+
+'Auth' => Illuminate\Support\Facades\Auth::class,
+
+
+実は、今までにも上記にあるDBファサードを使った DB::reconnect()（DB::connection()）や、
+Routeファサードを使ってのルーティングの設定などいくつかのファサードを利用しています。
+
+
+
+中でも、 Authファサードは認証に関する一連のメソッドを提供しています。
+先ほど紹介した Auth::check()もその1つで、 
+別のメソッドであるAuth::user() を利用するとログイン中のユーザを取得できます
+
+--}}
