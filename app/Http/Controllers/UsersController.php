@@ -29,4 +29,21 @@ class UsersController extends Controller
     return view('users.index', ['users' => $users,]);
     }  
     
+    
+    /*
+    'users.show' は viewファイル以下の指定です
+    'user' キーで送ってるので  ビュー側で　このキーの名前の変数名とします
+    
+    */
+    public function show($id){
+        
+        
+        $user = User::findOrFail($id);
+        
+        return view('users.show',['user' => $user, ]);
+        
+        
+    }
+    
+    
 }
