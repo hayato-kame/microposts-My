@@ -36,4 +36,23 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    
+    
+    
+    /**
+     * このユーザが所有する投稿
+     * microposts() というふうに複数形でメソッド名をつける
+     * 
+     * UserのインスタンスからそのUserが持つMicropostsを
+     * $user->microposts()->get()
+     * もしくは $user->microposts
+     * という簡単な記述で取得できるようになります。
+     */
+     public function microposts()
+     {
+        return $this->hasMany(Micropost::class); 
+     }
+     
+     
+     
 }

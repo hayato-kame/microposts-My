@@ -8,12 +8,21 @@
 | Here is where you can register web routes for your application. These
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
+また、 今まで / はRouterからControllerへ飛ばさずに
+直接welcomeのViewを表示させていました。
+
+ここからは少し複雑なことを行っていくのですが
+、上記の記述を下記のように変更し、
+Controller ( MicropostsController@index ) を経由し
+てwelcomeを表示するようにします。
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+Route::get('/', 'MicropostsController@index');
 
 
 //  ユーザー登録のルーティングの設定
@@ -56,4 +65,13 @@ index（ユーザ一覧）と show（ユーザ詳細）だけで良いからで�
 */
 Route::group(['middleware' => ['auth']], function() {
     Route::resource('users', 'UsersController', ['only' => ['index', 'show']]);
+
+    //  Micropostsのルーティングを設定  登録のstoreと削除のdestroyのみ
+    //  もし　ほかのアクションにも認証を必要とするときには、それも書く
+    //  認証済みのユーザだけがこれらのアクションにアクセスできます。
+    
+    Route::resource('microposts', 'MicropostsController',['only' => ['store', 'destroy']]);
+    
 });
+
+
