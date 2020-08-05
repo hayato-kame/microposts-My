@@ -3,7 +3,44 @@
 @section('content')
 
     @if (Auth::check())
-        {{ Auth::user()->name }}
+    
+        <div class="row">
+            
+            <aside class="col-sm-4">
+                
+                
+                <div class="card">
+                    
+                   <div class="card">
+                       
+                       <div class="card-header">
+                           <h3 class="card-title">
+                               {{  Auth::user()->name   }}
+                           </h3>
+                       </div>
+                       
+                       <div class="card-body">
+                           {{-- 認証済みユーザのめーるあどれすをもとにGravatarを取得して表  --}
+                      
+                          <img class="rounded img-fluid" src="{{ Gravatar::get(Auth::user()->email, ['size' => 500]) }}" alt="">
+                      
+                       </div>
+                   </div> 
+                </div>
+   
+                
+            </aside>
+            <div class="col-sm-8">
+                {{-- 投稿一覧　　指定は、resources フォルダの下の viewsフォルダの下を指定する
+                'microposts.microposts'  micropostsフォルダのmicroposts.blade.phpファイル 
+                --}
+                
+                @include('microposts.microposts')
+                
+            </div>
+            
+        </div>
+
     
     @else
         <div class="center jumbotron">
